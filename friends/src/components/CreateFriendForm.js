@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { addFriend } from '../actions';
+import { connect } from 'react-redux';
+
 
  class CreateFriendForm extends Component {
     constructor(props){
@@ -18,9 +21,10 @@ import React, { Component } from 'react';
         });
       };
 
-       submitHandler = () => {
-
-        
+       submitHandler = (event) => {
+         event.setState();
+         this.props.addFriend(this.state)
+         console.log(this.state)
        }
 
      render() {
@@ -49,13 +53,18 @@ import React, { Component } from 'react';
             value={this.state.email}
             placeholder="Email"
           />
-          <button onClick={this.submitHandler}>Create</button>
-          <button onClick={this.submitHandler}>Update</button>
+          <button onClick={this.submitHandler}>Add Friend</button>
+         { /*<button onClick={this.submitHandler}>Update</button>*/}
 
           </form>
 
        );
     }
   }
+  const mapStateToProps = state => {
+    return {
+      friends: state.friends
+    }}
+    
 
- export default CreateFriendForm; 
+ export default connect (mapStateToProps, { addFriend: addFriend })(CreateFriendForm); 
