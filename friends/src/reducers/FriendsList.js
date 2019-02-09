@@ -1,5 +1,7 @@
 import { FETCH_FRIEND, SUCCESS_FRIEND, FAILURE_FRIEND,
-         ADD_FETCH_FRIEND, ADD_SUCCESS_FRIEND, ADD_FAILURE_FRIEND
+         ADD_FETCH_FRIEND, ADD_SUCCESS_FRIEND, ADD_FAILURE_FRIEND,
+         DELETE_FETCH_FRIEND, DELETE_SUCCESS_FRIEND, DELETE_FAILURE_FRIEND
+
 } from '../actions'
 
 const initialState = {
@@ -56,10 +58,32 @@ export const friendsList = (state = initialState, action) => {
          ...state,
          fetchingFriends:false,
          error: action.payload
+       } 
+    case DELETE_FETCH_FRIEND:
+       return {
+         ...state,
+         fetchingFriends: true,
+         deletingFriend: true
        }
 
-      default:
-       return state;
-   }
- };
+    case DELETE_SUCCESS_FRIEND:
+       return {
+        ...state,
+         fetchingFriends: false,
+         friends: action.payload,
+         error: null,
+         deletingFriend: false
+          }
+
+    case DELETE_FAILURE_FRIEND:
+        return {
+        ...state,
+        fetchingFriends: false,
+        deletingFriend: false,
+        error: action.payload
+    }
  
+    default:
+      return state;
+    }
+  };
